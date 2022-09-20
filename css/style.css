@@ -1,0 +1,110 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: #90EE90;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  overflow: hidden;
+  text-align: center;
+}
+
+.game {
+
+  position: relative;
+
+  border: 5px solid rgb(0, 0, 0);
+  display: inline-flex;
+  align-items: center;
+
+}
+
+.fild {
+  background: #edd04d;
+  width: 500px;
+  height: 500px;
+  outline: 10px solid #006400;
+
+}
+
+.fild_mous {
+  opacity: 0.1;
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #3c31b7;
+  z-index: 3;
+}
+
+.unit {
+  position: absolute;
+
+  bottom: 0px;
+  left: 0px;
+  width: 40px;
+  height: 40px;
+  background-color: #3c31b7;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  border: 1px solid rgb(0, 0, 0);
+  z-index: 2;
+}
+
+.enemy {
+  position: absolute;
+  border-radius: 50%;
+  bottom: 0px;
+  left: 0px;
+  width: 40px;
+  height: 40px;
+  background-color: red;
+  transform: translate(-50%, 50%);
+  transition: 0.03s step-end;
+  border: 1px solid rgb(0, 0, 0);
+
+}
+
+input {
+  background-color: rgb(255, 244, 175);
+  width: 40px;
+}
