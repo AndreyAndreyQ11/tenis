@@ -11,11 +11,11 @@ const enemyValue = {
   x: 0,
   y: 0,
   tempX: 0,
-  tempY: -10,
-  resistAir: 1,
-  freeFallSpeed: -2,
+  tempY: 0,
+  resistAir: 0.25,
+  freeFallSpeed: -3,
 }
-const speedGame = 35;
+const speedGame = 20;
 const unitValue = {
   x: 0,
   y: 0,
@@ -36,8 +36,6 @@ function move(event) {
 let click = 0;
 fild_mous.addEventListener('click', start);
 let interval;
-// clearTimeout(qq1)
-
 
 function start() {
 
@@ -78,7 +76,7 @@ function intersection(vektorX, vektorY, vector) {
   enemyValue.tempY += Math.round(vektorY * 10 / vector);
   enemyValue.y += enemyValue.tempY;
   enemyValue.x += enemyValue.tempX;
-  if (enemyValue.x > 10 && enemyValue.x < 490) {
+  if (enemyValue.x > 20 && enemyValue.x < 480) {
     enemy.style.bottom = enemyValue.y + 'px';
     enemy.style.left = enemyValue.x + 'px';
     // enemyValue.tempY += enemyValue.resistAir;
@@ -87,27 +85,41 @@ function intersection(vektorX, vektorY, vector) {
     // enemyValue.tempX = (enemyValue.tempX > -enemyValue.resistAir) ? enemyValue.tempX + enemyValue.resistAir :
     //   (enemyValue.tempX < enemyValue.resistAir) ? enemyValue.tempX - enemyValue.resistAir : enemyValue.tempX = 0;
   } else {
-    enemyValue.tempX = -enemyValue.tempX;
+    reversesX();
   }
 };
+
 function divergence() {
   enemyValue.y += enemyValue.tempY;
   enemyValue.x += enemyValue.tempX;
-  if (enemyValue.x > 10 && enemyValue.x < 490) {
+  if (enemyValue.x > 20 && enemyValue.x < 480) {
     enemy.style.left = enemyValue.x + 'px';
     enemy.style.bottom = enemyValue.y + 'px';
-    // console.log('1', enemyValue.tempY);
-    // enemyValue.tempY = (enemyValue.tempY = enemyValue.freeFallSpeed) ? enemyValue.tempY :
-    //   (enemyValue.tempY > enemyValue.freeFallSpeed) ? enemyValue.tempY - enemyValue.resistAir - enemyValue.freeFallSpeed :
+
+    // enemyValue.tempY = (enemyValue.tempY > enemyValue.freeFallSpeed) ? enemyValue.tempY - enemyValue.resistAir :
+    //   (enemyValue.tempY < enemyValue.freeFallSpeed) ? enemyValue.tempY + enemyValue.resistAir :
     //     enemyValue.tempY + enemyValue.resistAir;
-    enemyValue.tempY = (enemyValue.tempY > enemyValue.freeFallSpeed) ? enemyValue.tempY - enemyValue.resistAir :
-      (enemyValue.tempY < enemyValue.freeFallSpeed) ? enemyValue.tempY + enemyValue.resistAir :
-        enemyValue.tempY + enemyValue.resistAir;
-    // console.log('2', enemyValue.tempY);
-    enemyValue.tempX = (enemyValue.tempX > 0) ? enemyValue.tempX - enemyValue.resistAir / 4 :
-      (enemyValue.tempX < 0) ? enemyValue.tempX + enemyValue.resistAir / 4 : enemyValue.tempX = 0;
+    enemyValue.tempY = (enemyValue.tempY >= enemyValue.freeFallSpeed) ?
+      enemyValue.tempY - Math.abs(Math.round(enemyValue.resistAir * enemyValue.tempY * 10) / 100) + enemyValue.freeFallSpeed * 0.1 :
+      enemyValue.tempY + Math.abs(Math.round(enemyValue.resistAir * enemyValue.tempY * 10)) / 100 - enemyValue.freeFallSpeed * 0.1;
+
+
+    enemyValue.tempX = (enemyValue.tempX > 0) ? enemyValue.tempX - Math.round(enemyValue.resistAir * enemyValue.tempX * 10) / 100 :
+      (enemyValue.tempX < 0) ? enemyValue.tempX - Math.round(enemyValue.resistAir * enemyValue.tempX * 10) / 100 : enemyValue.tempX = 0;
+
   } else {
-    enemyValue.tempX = -enemyValue.tempX;
+    reversesX();
   }
 }
 
+function reversesX() {
+  if (enemyValue.x <= 20) {
+    enemy.style.bottom = enemyValue.y + 'px';
+    enemy.style.left = 20 + 'px';
+    enemyValue.tempX = -enemyValue.tempX;
+  } else {
+    enemy.style.bottom = enemyValue.y + 'px';
+    enemy.style.left = 480 + 'px';
+    enemyValue.tempX = -enemyValue.tempX;
+  }
+};
