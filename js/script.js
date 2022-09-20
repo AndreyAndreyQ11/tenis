@@ -54,55 +54,54 @@ function start() {
 
 function physics() {
 
-  if (enemyValue.y > -2) {
+  // if (enemyValue.y > 20) {
 
-    let vektorX = (enemyValue.x - unitValue.x);
-    let vektorY = (enemyValue.y - unitValue.y);
-    let vector = Math.round(Math.sqrt(vektorX * vektorX + vektorY * vektorY));
+  let vektorX = (enemyValue.x - unitValue.x);
+  let vektorY = (enemyValue.y - unitValue.y);
+  let vector = Math.round(Math.sqrt(vektorX * vektorX + vektorY * vektorY));
 
-    if (vector <= 40) {
-      intersection(vektorX, vektorY, vector);
-      return;
-    }
-
-    divergence();
+  if (vector <= 40) {
+    intersection(vektorX, vektorY, vector);
     return;
   }
-  clearInterval(interval);
+
+  divergence();
+  //   return;
+  // }
+  // clearInterval(interval);
 }
 
 function intersection(vektorX, vektorY, vector) {
   enemyValue.tempX += Math.round(vektorX * 10 / vector);
   enemyValue.tempY += Math.round(vektorY * 10 / vector);
-  enemyValue.y += enemyValue.tempY;
-  enemyValue.x += enemyValue.tempX;
-  if (enemyValue.x > 20 && enemyValue.x < 480) {
-    enemy.style.bottom = enemyValue.y + 'px';
-    enemy.style.left = enemyValue.x + 'px';
-    // enemyValue.tempY += enemyValue.resistAir;
-    // enemyValue.tempX = (enemyValue.tempX > -enemyValue.resistAir) ? enemyValue.tempX + enemyValue.resistAir :
-    //   (enemyValue.tempX < enemyValue.resistAir) ? enemyValue.tempX - enemyValue.resistAir : enemyValue.tempX = 0;
-    // enemyValue.tempX = (enemyValue.tempX > -enemyValue.resistAir) ? enemyValue.tempX + enemyValue.resistAir :
-    //   (enemyValue.tempX < enemyValue.resistAir) ? enemyValue.tempX - enemyValue.resistAir : enemyValue.tempX = 0;
-  } else {
-    reversesX();
-  }
+
+  moveEnemy();
 };
 
 function divergence() {
+  moveEnemy();
+}
+
+
+function moveEnemy() {
   enemyValue.y += enemyValue.tempY;
   enemyValue.x += enemyValue.tempX;
   if (enemyValue.x > 20 && enemyValue.x < 480) {
-    enemy.style.left = enemyValue.x + 'px';
-    enemy.style.bottom = enemyValue.y + 'px';
+    if (enemyValue.y > 20 && enemyValue.y < 480) {
+      enemy.style.bottom = enemyValue.y + 'px';
+      enemy.style.left = enemyValue.x + 'px';
 
-    enemyValue.tempY = (enemyValue.tempY >= enemyValue.freeFallSpeed) ?
-      enemyValue.tempY - Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY - enemyValue.freeFallSpeed) * 10) / 100) :
-      enemyValue.tempY + Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY + enemyValue.freeFallSpeed) * 10)) / 100;
 
-    enemyValue.tempX = (enemyValue.tempX > 0) ? enemyValue.tempX - Math.round(enemyValue.resistAir * enemyValue.tempX * 10) / 100 :
-      (enemyValue.tempX < 0) ? enemyValue.tempX - Math.round(enemyValue.resistAir * enemyValue.tempX * 10) / 100 : enemyValue.tempX = 0;
+      enemyValue.tempY = (enemyValue.tempY >= enemyValue.freeFallSpeed) ?
+        enemyValue.tempY - Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY - enemyValue.freeFallSpeed) * 10) / 100) :
+        enemyValue.tempY + Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY + enemyValue.freeFallSpeed) * 10)) / 100;
 
+      enemyValue.tempX = (enemyValue.tempX > enemyValue.resistAir) ? enemyValue.tempX - (enemyValue.resistAir * enemyValue.tempX * 0.1).toFixed(2) :
+        (enemyValue.tempX < -enemyValue.resistAir) ? enemyValue.tempX - (enemyValue.resistAir * enemyValue.tempX * 0.1).toFixed(2) : enemyValue.tempX = 0;
+      console.log(enemyValue.tempX);
+    } else {
+      reversesY();
+    }
   } else {
     reversesX();
   }
@@ -117,5 +116,17 @@ function reversesX() {
     enemy.style.bottom = enemyValue.y + 'px';
     enemy.style.left = 480 + 'px';
     enemyValue.tempX = -enemyValue.tempX;
+  }
+};
+
+function reversesY() {
+  if (enemyValue.y <= 20) {
+    enemy.style.bottom = 20 + 'px';
+    enemy.style.left = enemyValue.x + 'px';
+    enemyValue.tempY = -enemyValue.tempY;
+  } else {
+    enemy.style.bottom = 480 + 'px';
+    enemy.style.left = enemyValue.x + 'px';
+    enemyValue.tempY = -enemyValue.tempY;
   }
 };
