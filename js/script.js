@@ -13,7 +13,7 @@ const enemyValue = {
   tempX: 0,
   tempY: 0,
   resistAir: 0.25,
-  freeFallSpeed: -3,
+  freeFallSpeed: -6,
 }
 const speedGame = 20;
 const unitValue = {
@@ -96,13 +96,9 @@ function divergence() {
     enemy.style.left = enemyValue.x + 'px';
     enemy.style.bottom = enemyValue.y + 'px';
 
-    // enemyValue.tempY = (enemyValue.tempY > enemyValue.freeFallSpeed) ? enemyValue.tempY - enemyValue.resistAir :
-    //   (enemyValue.tempY < enemyValue.freeFallSpeed) ? enemyValue.tempY + enemyValue.resistAir :
-    //     enemyValue.tempY + enemyValue.resistAir;
     enemyValue.tempY = (enemyValue.tempY >= enemyValue.freeFallSpeed) ?
-      enemyValue.tempY - Math.abs(Math.round(enemyValue.resistAir * enemyValue.tempY * 10) / 100) + enemyValue.freeFallSpeed * 0.1 :
-      enemyValue.tempY + Math.abs(Math.round(enemyValue.resistAir * enemyValue.tempY * 10)) / 100 - enemyValue.freeFallSpeed * 0.1;
-
+      enemyValue.tempY - Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY - enemyValue.freeFallSpeed) * 10) / 100) :
+      enemyValue.tempY + Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY + enemyValue.freeFallSpeed) * 10)) / 100;
 
     enemyValue.tempX = (enemyValue.tempX > 0) ? enemyValue.tempX - Math.round(enemyValue.resistAir * enemyValue.tempX * 10) / 100 :
       (enemyValue.tempX < 0) ? enemyValue.tempX - Math.round(enemyValue.resistAir * enemyValue.tempX * 10) / 100 : enemyValue.tempX = 0;
