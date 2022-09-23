@@ -91,14 +91,19 @@ function moveEnemy() {
       enemy.style.bottom = enemyValue.y + 'px';
       enemy.style.left = enemyValue.x + 'px';
 
-
       enemyValue.tempY = (enemyValue.tempY >= enemyValue.freeFallSpeed) ?
-        enemyValue.tempY - Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY - enemyValue.freeFallSpeed) * 10) / 100) :
-        enemyValue.tempY + Math.abs(Math.round(enemyValue.resistAir * (enemyValue.tempY + enemyValue.freeFallSpeed) * 10)) / 100;
+        enemyValue.tempY - Math.abs(enemyValue.resistAir * (enemyValue.tempY - enemyValue.freeFallSpeed) * 0.1) :
+        enemyValue.tempY + Math.abs(enemyValue.resistAir * (enemyValue.tempY + enemyValue.freeFallSpeed) * 0.1);
+      // console.log('y', enemyValue.tempY);
 
-      enemyValue.tempX = (enemyValue.tempX > enemyValue.resistAir) ? enemyValue.tempX - (enemyValue.resistAir * enemyValue.tempX * 0.1).toFixed(2) :
-        (enemyValue.tempX < -enemyValue.resistAir) ? enemyValue.tempX - (enemyValue.resistAir * enemyValue.tempX * 0.1).toFixed(2) : enemyValue.tempX = 0;
-      console.log(enemyValue.tempX);
+      // console.time('#1')
+      enemyValue.tempX = (enemyValue.tempX > enemyValue.resistAir * 0.1) ? (enemyValue.tempX - (enemyValue.resistAir * enemyValue.tempX * 0.1)) :
+        (enemyValue.tempX < -enemyValue.resistAir * 0.1) ? enemyValue.tempX - (enemyValue.resistAir * enemyValue.tempX * 0.1) : enemyValue.tempX = 0;
+
+
+      // console.timeEnd('#1')
+
+
     } else {
       reversesY();
     }
@@ -130,3 +135,28 @@ function reversesY() {
     enemyValue.tempY = -enemyValue.tempY;
   }
 };
+
+// console.time('#1')
+// setTimeout(foo1, 500)
+// console.timeEnd('#1')
+
+// console.time('#2')
+// setTimeout(foo2, 500)
+// console.timeEnd('#2')
+
+// console.time('#3')
+// let b = 0;
+// for (let i = 0; i < 10; i++) {
+//   b += i;
+// };
+// console.log(b);
+// console.timeEnd('#3')
+
+// console.time('#4')
+// let c = 0;
+// for (let i = 0; i < 100; i++) {
+//   c += i;
+// };
+// console.log(c);
+// console.timeEnd('#4')
+
