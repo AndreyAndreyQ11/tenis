@@ -63,6 +63,18 @@ body {
 
 }
 
+.test_square {
+  border: 1px solid rgb(0, 0, 0);
+  position: relative;
+  top: -100px;
+  left: 100px;
+  width: 30px;
+  height: 30px;
+  background-color: #006400;
+}
+
+
+
 input {
   background-color: rgb(255, 244, 175);
   width: 40px;

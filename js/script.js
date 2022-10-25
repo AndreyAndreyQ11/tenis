@@ -1,12 +1,33 @@
 
 "use strict"
-const fild = document.querySelector('.fild');
-const unit = document.querySelector('.unit');
-const X = document.querySelector('.X');
-const Y = document.querySelector('.Y');
-const fild_mous = document.querySelector('.fild_mous');
 
-const enemy = document.querySelector('.enemy');
+import { unit, X_input, Y_input, fild_mous, enemy, test_square } from "../modules/elements.js";
+
+// let options = {
+//   root: document.querySelector('.unit'),
+//   rootMargin: '0px',
+//   threshold: 0
+// }
+
+let q1 = new IntersectionObserver((callback, q2, q3) => {
+  console.log(callback);
+
+  console.log(q2);
+  console.log(q3);
+}, {
+  root: document.querySelector('.unit'),
+  rootMargin: '0px',
+  threshold: 0,
+});
+
+document.querySelectorAll('.test_square').forEach((e) => q1.observe(e));
+
+
+
+
+
+
+
 const enemyValue = {
   x: 0,
   y: 0,
@@ -30,8 +51,8 @@ function move(event) {
   unit.style.left = unitValue.x + 'px';
   unit.style.bottom = unitValue.y + 'px';
 
-  X.value = unitValue.x;
-  Y.value = unitValue.y;
+  X_input.value = unitValue.x;
+  Y_input.value = unitValue.y;
 }
 let click = 0;
 fild_mous.addEventListener('click', start);
@@ -135,28 +156,4 @@ function reversesY() {
     enemyValue.tempY = -enemyValue.tempY;
   }
 };
-
-// console.time('#1')
-// setTimeout(foo1, 500)
-// console.timeEnd('#1')
-
-// console.time('#2')
-// setTimeout(foo2, 500)
-// console.timeEnd('#2')
-
-// console.time('#3')
-// let b = 0;
-// for (let i = 0; i < 10; i++) {
-//   b += i;
-// };
-// console.log(b);
-// console.timeEnd('#3')
-
-// console.time('#4')
-// let c = 0;
-// for (let i = 0; i < 100; i++) {
-//   c += i;
-// };
-// console.log(c);
-// console.timeEnd('#4')
 
